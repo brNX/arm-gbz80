@@ -1,0 +1,12 @@
+eclipse.preferences.version=1
+environment/buildEnvironmentInclude/org.eclipse.cdt.cross.arm.gnu.sourcery.linux.elf.release.1053804216/CPATH/delimiter=\:
+environment/buildEnvironmentInclude/org.eclipse.cdt.cross.arm.gnu.sourcery.linux.elf.release.1053804216/CPATH/operation=remove
+environment/buildEnvironmentInclude/org.eclipse.cdt.cross.arm.gnu.sourcery.linux.elf.release.1053804216/C_INCLUDE_PATH/delimiter=\:
+environment/buildEnvironmentInclude/org.eclipse.cdt.cross.arm.gnu.sourcery.linux.elf.release.1053804216/C_INCLUDE_PATH/operation=remove
+environment/buildEnvironmentInclude/org.eclipse.cdt.cross.arm.gnu.sourcery.linux.elf.release.1053804216/append=true
+environment/buildEnvironmentInclude/org.eclipse.cdt.cross.arm.gnu.sourcery.linux.elf.release.1053804216/appendContributed=true
+environment/buildEnvironmentLibrary/org.eclipse.cdt.cross.arm.gnu.sourcery.linux.elf.release.1053804216/LIBRARY_PATH/delimiter=\:
+environment/buildEnvironmentLibrary/org.eclipse.cdt.cross.arm.gnu.sourcery.linux.elf.release.1053804216/LIBRARY_PATH/operation=replace
+environment/buildEnvironmentLibrary/org.eclipse.cdt.cross.arm.gnu.sourcery.linux.elf.release.1053804216/LIBRARY_PATH/value=/opt/intel/composerxe/compiler/lib/intel64\:/opt/intel/composerxe/compiler/lib/intel64
+environment/buildEnvironmentLibrary/org.eclipse.cdt.cross.arm.gnu.sourcery.linux.elf.release.1053804216/append=true
+environment/buildEnvironmentLibrary/org.eclipse.cdt.cross.arm.gnu.sourcery.linux.elf.release.1053804216/appendContributed=true
