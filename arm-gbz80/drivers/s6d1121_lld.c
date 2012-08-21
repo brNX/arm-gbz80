@@ -1,6 +1,7 @@
 #include <inc/lm3s1776.h>
 #include <inc/hw_types.h>
 #include <inc/hw_memmap.h>
+#include <inc/hw_gpio.h>
 #include <driverlib/debug.h>
 #include <driverlib/sysctl.h>
 #include <driverlib/systick.h>
@@ -17,35 +18,41 @@ uint16_t fcolor;
 uint16_t bcolor;
 long disp_x_size, disp_y_size;
 
+#define LCD_RST_LOW		HWREG(GPIO_PORTE_BASE + GPIO_O_DATA + (LCD_RST_PIN << 2)) = 0;
+#define LCD_RST_HIGH	HWREG(GPIO_PORTE_BASE + GPIO_O_DATA + (LCD_RST_PIN << 2)) = LCD_RST_PIN;
 
-#define LCD_RST_LOW		GPIO_PORTE_DATA_R &= ~(1<<LCD_RST_PIN)
-#define LCD_RST_HIGH	GPIO_PORTE_DATA_R |= (1<<LCD_RST_PIN)
 
 #define s6d1121_delay(n) 	SysCtlDelay(n * ulClockMS)
 
+#define LCD_CS_LOW		HWREG(GPIO_PORTE_BASE + GPIO_O_DATA + (LCD_CS_PIN << 2)) = 0;
+#define LCD_CS_HIGH		HWREG(GPIO_PORTE_BASE + GPIO_O_DATA + (LCD_CS_PIN << 2)) = LCD_CS_PIN;
 
-#define LCD_CS_LOW		GPIO_PORTE_DATA_R &= ~(1<<LCD_CS_PIN)
-#define LCD_CS_HIGH		GPIO_PORTE_DATA_R |=(1<<LCD_CS_PIN)
 
-#define LCD_RS_LOW		GPIO_PORTE_DATA_R &= ~(1<<LCD_RS_PIN)
-#define LCD_RS_HIGH		GPIO_PORTE_DATA_R |=(1<<LCD_RS_PIN)
+#define LCD_RS_LOW		HWREG(GPIO_PORTE_BASE + GPIO_O_DATA + (LCD_RS_PIN << 2)) = 0;
+#define LCD_RS_HIGH		HWREG(GPIO_PORTE_BASE + GPIO_O_DATA + (LCD_RS_PIN << 2)) = LCD_RS_PIN;
 
-#define LCD_RD_LOW		GPIO_PORTE_DATA_R &= ~(1<<LCD_RD_PIN)
-#define LCD_RD_HIGH		GPIO_PORTE_DATA_R |=(1<<LCD_RD_PIN)
 
-#define LCD_WR_LOW		GPIO_PORTE_DATA_R &= ~(1<<LCD_WR_PIN)
-#define LCD_WR_HIGH		GPIO_PORTE_DATA_R |=(1<<LCD_WR_PIN)
+#define LCD_RD_LOW		HWREG(GPIO_PORTE_BASE + GPIO_O_DATA + (LCD_RD_PIN << 2)) = 0;
+#define LCD_RD_HIGH		HWREG(GPIO_PORTE_BASE + GPIO_O_DATA + (LCD_RD_PIN << 2)) = LCD_RD_PIN;
+
+
+#define LCD_WR_LOW  	HWREG(GPIO_PORTE_BASE + GPIO_O_DATA + (LCD_WR_PIN << 2)) = 0;
+#define LCD_WR_HIGH 	HWREG(GPIO_PORTE_BASE + GPIO_O_DATA + (LCD_WR_PIN << 2)) = LCD_WR_PIN;
+
+
 
 static inline void lld_lcdwrite(uint16_t db)
 {
 
-	GPIO_PORTB_DATA_R = (db>>8)&0xFF;
+	//GPIO_PORTB_DATA_R = (db>>8)&0xFF;
+	HWREG(GPIO_PORTB_BASE + GPIO_O_DATA + (0xFF << 2)) = (db>>8);
 
 	LCD_WR_LOW;
 	LCD_WR_HIGH;
 
 
-	GPIO_PORTB_DATA_R = db&0xFF;
+	//GPIO_PORTB_DATA_R = db&0xFF;
+	HWREG(GPIO_PORTB_BASE + GPIO_O_DATA + (0xFF << 2)) = db;
 
 	LCD_WR_LOW;
 	LCD_WR_HIGH;
@@ -101,7 +108,7 @@ void lld_lcdInit() {
 
 
 	ROM_GPIOPinTypeGPIOOutput(LCD_DL_GPIO, 0xff);
-	ROM_GPIOPinTypeGPIOOutput(LCD_RST_GPIO, (1<<LCD_RST_PIN));
+	ROM_GPIOPinTypeGPIOOutput(LCD_RST_GPIO, LCD_RST_PIN);
 
 	//
 	// Hardware Reset
@@ -112,16 +119,17 @@ void lld_lcdInit() {
 	s6d1121_delay(30);
 
 	// IO Default Configurations
-	ROM_GPIOPinTypeGPIOOutput(LCD_CS_GPIO, (1<<LCD_CS_PIN));
-	ROM_GPIOPinTypeGPIOOutput(LCD_WR_GPIO, (1<<LCD_WR_PIN));
-	ROM_GPIOPinTypeGPIOOutput(LCD_RD_GPIO, (1<<LCD_RD_PIN));
-	ROM_GPIOPinTypeGPIOOutput(LCD_RS_GPIO, (1<<LCD_RS_PIN));
+	ROM_GPIOPinTypeGPIOOutput(LCD_CS_GPIO, LCD_CS_PIN);
+	ROM_GPIOPinTypeGPIOOutput(LCD_WR_GPIO, LCD_WR_PIN);
+	ROM_GPIOPinTypeGPIOOutput(LCD_RD_GPIO, LCD_RD_PIN);
+	ROM_GPIOPinTypeGPIOOutput(LCD_RS_GPIO, LCD_RS_PIN);
 
 
 	LCD_CS_HIGH;
 	LCD_RD_HIGH;
 	LCD_WR_HIGH;
 
+	s6d1121_delay(5);
 
 	lld_lcdWriteReg(0x11,0x2004);
 	lld_lcdWriteReg(0x13,0xCC00);

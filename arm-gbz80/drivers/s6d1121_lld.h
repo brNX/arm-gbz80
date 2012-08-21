@@ -25,19 +25,19 @@
 
 // I/O assignments
 #define LCD_CS_GPIO			GPIO_PORTE_BASE
-#define LCD_CS_PIN			0
+#define LCD_CS_PIN			GPIO_PIN_0
 
 #define LCD_RS_GPIO			GPIO_PORTE_BASE
-#define LCD_RS_PIN			3
+#define LCD_RS_PIN			GPIO_PIN_3
 
 #define LCD_RST_GPIO		GPIO_PORTE_BASE
-#define LCD_RST_PIN			4
+#define LCD_RST_PIN			GPIO_PIN_4
 
 #define LCD_RD_GPIO			GPIO_PORTE_BASE
-#define LCD_RD_PIN			1
+#define LCD_RD_PIN			GPIO_PIN_1
 
 #define LCD_WR_GPIO			GPIO_PORTE_BASE
-#define LCD_WR_PIN			2
+#define LCD_WR_PIN			GPIO_PIN_2
 
 #define LCD_DH_GPIO			GPIO_PORTA_BASE
 #define LCD_DL_GPIO			GPIO_PORTB_BASE
